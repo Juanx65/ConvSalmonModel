@@ -42,24 +42,31 @@ def ConvSalmonModel():
         layers.Dense(nb_classes)
     ])
 
+    data_augmentation = keras.Sequential(
+        [
+            layers.RandomFlip("horizontal",input_shape=(IMAGE_SIZE[0],IMAGE_SIZE[1],3)),
+            layers.RandomRotation(0.1),
+            layers.RandomZoom(0.1),
+        ])
+
     #Modelo pa probar porque ya no se que hacer
-    model_3 = tf.keras.Sequential([
-        layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
-        layers.Conv2D(8,(3, 3), activation = 'relu'),
-        layers.MaxPooling2D(),
-        layers.Conv2D(16,(3, 3), activation = 'relu'),
-        layers.MaxPooling2D(),
-        layers.Conv2D(32, (6,6), activation = 'relu'),
-        layers.MaxPooling2D(),
-        layers.Flatten(),
-        layers.Dense(128, activation='relu'),
-        layers.Dense(nb_classes)
-    ])
-
-
+    model_3 = Sequential([
+      data_augmentation,
+      layers.Rescaling(1./255),
+      layers.Conv2D(8, 3, padding='same', activation='relu'),
+      layers.MaxPooling2D(),
+      layers.Conv2D(16, 3, padding='same', activation='relu'),
+      layers.MaxPooling2D(),
+      layers.Conv2D(32, 6, padding='same', activation='relu'),
+      layers.MaxPooling2D(),
+      layers.Dropout(0.5),
+      layers.Flatten(),
+      layers.Dense(1152, activation='relu'),
+      layers.Dense(nb_classes)
+     ])
 
     model = model_3
-    model.compile(optimizer= 'adam', # 'sgd'
+    model.compile(optimizer= 'adam',     #'adam', # 'sgd'
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
