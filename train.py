@@ -12,7 +12,6 @@ import argparse
 
 from model import ConvSalmonModel
 
-
 def train(opt):
     #inicialiazar el Modelo
     class_names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
@@ -51,27 +50,14 @@ def train(opt):
 
 
     # para guardar checkpoints
-    """
-    checkpoint_path = str(str(Path(__file__).parent) +"/checkpoints/cp-{epoch:04d}.ckpt")
-    checkpoint_dir = os.path.dirname(checkpoint_path)
-    # Create a callback that saves the model's weights every 5 epochs
-    cp_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=checkpoint_path,
-        verbose=1,
-        save_weights_only=True,
-        save_freq=100)
-    # Save the weights using the `checkpoint_path` format
-    """
     if(opt.save):
         checkpoint_filepath = str(str(Path(__file__).parent) +"/checkpoints/best.ckpt")
-
         model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
             filepath=checkpoint_filepath,
             save_weights_only=True,
             monitor='val_accuracy',
             mode='max',
             save_best_only=True)
-
         history = model.fit(
           train_ds,
           validation_data=val_ds,

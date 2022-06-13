@@ -16,8 +16,8 @@ def ConvSalmonModel():
     #print(class_name_label)
     IMAGE_SIZE = (200,100)
 
-    #Modelo de la red hecha en el paper:
-    model = tf.keras.Sequential([
+    #Modelo que hice inicialmente:
+    model_1 = tf.keras.Sequential([
         layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
         layers.Conv2D(16,(3, 3), activation = 'relu'),
         layers.MaxPooling2D(),
@@ -25,13 +25,41 @@ def ConvSalmonModel():
         layers.MaxPooling2D(),
         layers.Flatten(),
         layers.Dense(128, activation = 'relu'),
-        layers.Dense(128, activation = 'relu'),
-        layers.Dense(128, activation = 'relu'),
-        layers.Dense(128, activation = 'relu'),
         layers.Dense(nb_classes)
     ])
 
-    model.compile(optimizer='adam',
+    #Modelo que promone el papers de los salmones pa detectar manchas/puntos:
+    model_2 = tf.keras.Sequential([
+        layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
+        layers.Conv2D(8,(3, 3), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(16,(3, 3), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, (6,6), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Flatten(),
+        layers.Dense(1152, activation = 'relu'),
+        layers.Dense(nb_classes)
+    ])
+
+    #Modelo pa probar porque ya no se que hacer
+    model_3 = tf.keras.Sequential([
+        layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
+        layers.Conv2D(8,(3, 3), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(16,(3, 3), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, (6,6), activation = 'relu'),
+        layers.MaxPooling2D(),
+        layers.Flatten(),
+        layers.Dense(128, activation = tf.nn.relu),
+        layers.Dense(nb_classes, activation = tf.nn.softmax)
+    ])
+
+
+
+    model = model_3
+    model.compile(optimizer= 'adam', # 'sgd'
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
