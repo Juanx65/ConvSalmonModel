@@ -10,7 +10,7 @@ def getRoi(img, img_mask, debug=False):
 
 	# Obtener la orientacion de la img
 	rotRect = cv.minAreaRect(border)
-	angle = rotRect[-1]	
+	angle = rotRect[-1]
 	if rotRect[1][0] < rotRect[1][1]:
 		angle = angle - 90
 
@@ -35,7 +35,7 @@ def getRoi(img, img_mask, debug=False):
 	box = cv.boxPoints(rect)
 	p_ul = [ min(np.int0(box)[:,0]), min(np.int0(box)[:,1])]		# upper-left
 	p_br = [ max(np.int0(box)[:,0]), max(np.int0(box)[:,1])]		# bottom-right
-	
+
 	#cv.drawContours(result, [np.int0(box)], 0, (0,0,255),2)
 	#cv.imshow('asdasd',result)
 	#cv.waitKey(0)
@@ -52,15 +52,15 @@ def getRoi(img, img_mask, debug=False):
 	# Orientacion: True = mira izq. , False = mira der.
 	print(left_area, right_area)
 	look_left = True if left_area >= right_area else False
-	
+
 	# --- Upper fin calculation ---
 	# sliding window
-	for i in np.arange(0.2, 0.5, 0.01):	
+	for i in np.arange(0.2, 0.5, 0.01):
 		if look_left:
-			x1 = int(i*fish_length) 
+			x1 = int(i*fish_length)
 			x2 = int((i+0.2)*fish_length)
 		else:
-			x1 = int((1-i-0.2)*fish_length) 
+			x1 = int((1-i-0.2)*fish_length)
 			x2 = int((1-i)*fish_length)
 		fin_roi = first_roi_mask[0:int((p_br[1]-p_ul[1])/2),x1:x2]
 		if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 2):
@@ -90,12 +90,12 @@ def getRoi(img, img_mask, debug=False):
 	th = 75
 	if look_left:	# pez mirando a derecha, toma primeros pixeles para buscar ojo
 		a = 0
-		b = int(c*fish_length)						
+		b = int(c*fish_length)
 	else:
 		a = int((1-c)*fish_length)
 		b = fish_length
 
-	eye_roi = first_roi_gray[:, a:b]	
+	eye_roi = first_roi_gray[:, a:b]
 	th, eye = cv.threshold(eye_roi, th, 255, cv.THRESH_BINARY_INV)			# 60 perilla
 	#cv.imshow('as',eye)
 	#cv.waitKey(0)
@@ -148,8 +148,8 @@ def getRoi(img, img_mask, debug=False):
 	return final_roi
 
 def main():
-	salmon = 'salmon5'
-	scene = '00001'
+	salmon = 'frames_salmones/salmon7'
+	scene = '00046'
 	img = cv.imread(salmon+'/original/scene'+scene+'.png')
 
 	img_mask = cv.imread(salmon+'/binario/scene'+scene+'.png')
