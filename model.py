@@ -31,11 +31,12 @@ def ConvSalmonModel():
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
-    model.summary()
+    #model.summary()
     return model
 
 def main():
-	model = ConvSalmonModel()
+    model = ConvSalmonModel()
+    #model.summary()
 
 if __name__ == '__main__':
 	main()
