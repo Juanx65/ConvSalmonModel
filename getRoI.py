@@ -50,7 +50,7 @@ def getRoi(img, img_mask, debug=False):
 	left_area = cv.countNonZero(first_roi_mask[:,0:mid])
 	right_area = cv.countNonZero(first_roi_mask[:,mid+1:])
 	# Orientacion: True = mira izq. , False = mira der.
-	print(left_area, right_area)
+	#print(left_area, right_area)
 	look_left = True if left_area >= right_area else False
 
 	# --- Upper fin calculation ---
@@ -63,10 +63,14 @@ def getRoi(img, img_mask, debug=False):
 			x1 = int((1-i-0.2)*fish_length)
 			x2 = int((1-i)*fish_length)
 		fin_roi = first_roi_mask[0:int((p_br[1]-p_ul[1])/2),x1:x2]
-		if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 2):
+		try:
+			if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 1):
+				break
+			elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 1):
+				break
+		except:
 			break
-		elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 2):
-			break
+							
 
 	m1 = 0; b1 = 0; m2 = 0; b2 = 0
 	fin_roi_w = x2 - x1;	fin_roi_w_half = int((x2-x1)/2)
@@ -77,13 +81,13 @@ def getRoi(img, img_mask, debug=False):
 	# Recta 2
 	m2 = (np.where(fin_roi[:,fin_roi_w-1] == 255)[0][0] - np.where(fin_roi[:,fin_roi_w_half] == 255)[0][0])/fin_roi_w_half
 	b2 = np.where(fin_roi[:,fin_roi_w-1] == 255)[0][0] + 1 - m2*fin_roi_w
-	print("R1: y = %.3fx %s %.3f , R2: y = %.3fx %s %.3f" % (m1,'+' if b1 > 0 else '-',np.abs(b1),m2,'+' if b2 > 0 else '-',np.abs(b2)))
+	#print("R1: y = %.3fx %s %.3f , R2: y = %.3fx %s %.3f" % (m1,'+' if b1 > 0 else '-',np.abs(b1),m2,'+' if b2 > 0 else '-',np.abs(b2)))
 
 	M = np.array([[m1, -1], [m2, -1]])
 	B = np.array([-b1, -b2])
 	x_sol = np.linalg.solve(M,B)
 	UP = (x1 + int(x_sol[0]) - 1, int(x_sol[1]) - 1)
-	print('UP:',UP)
+	#print('UP:',UP)
 
 	# --- Eye coordinates calculation ---
 	c = 0.12		# 0.07 perilla
@@ -110,15 +114,18 @@ def getRoi(img, img_mask, debug=False):
 	# 			n_px += 1
 	# EP = ( int(eye_x/n_px), int(eye_y/n_px) )
 	moments = cv.moments(eye)
+	if moments['m00']==0:
+		final_roi = first_roi
+		return final_roi
 	cx = int(moments['m10']/moments['m00']) + a
 	cy = int(moments['m01']/moments['m00'])
 	EP = (cx, cy)
-	print('EP:', EP)
+	#print('EP:', EP)
 
 	# --- Belly point ---
 	bp_y = np.where(first_roi_mask[:,UP[0]] == 255)[0][-1]
 	BP = ( UP[0], int(0.65*(bp_y - UP[1])) + UP[1])
-	print('BP:',BP)
+	#print('BP:',BP)
 
 	# --- Final RoI ---
 	final_roi = first_roi.copy()
