@@ -12,7 +12,16 @@ dsp instalar los requirements.
 ## Para evaluar el modelo entrenado usar por ejemplo:
 
 ```
-python eval.py --image /rois/salmon5/scene00161.png --weights /checkpoints/cp-0100.ckpt
+python eval.py --image /rois/salmon5/scene00161.png --weights /checkpoints/best.ckpt
 ```
 
 donde `--image` es el path a la imagen a evaluar y `--weights` es el path a los pesos entrenados.
+
+
+## Para entrenar modelo, guiarse por el siguiente ejemplo:
+
+```
+python train.py --data_dir "rois/" --epochs 100 --batch_size 32 --save True
+```
+
+donde `--save True` guardara `best.ckpt` segun la validacion del modelo, si no se especifica no guardara nada.

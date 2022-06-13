@@ -16,6 +16,7 @@ def ConvSalmonModel():
     #print(class_name_label)
     IMAGE_SIZE = (200,100)
 
+    #Modelo de la red hecha en el paper:
     model = tf.keras.Sequential([
         layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
         layers.Conv2D(16,(3, 3), activation = 'relu'),
@@ -23,6 +24,9 @@ def ConvSalmonModel():
         layers.Conv2D(32, (3,3), activation = 'relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
+        layers.Dense(128, activation = 'relu'),
+        layers.Dense(128, activation = 'relu'),
+        layers.Dense(128, activation = 'relu'),
         layers.Dense(128, activation = 'relu'),
         layers.Dense(nb_classes)
     ])
@@ -36,7 +40,7 @@ def ConvSalmonModel():
 
 def main():
     model = ConvSalmonModel()
-    #model.summary()
+    model.summary()
 
 if __name__ == '__main__':
-	main()
+    main()
