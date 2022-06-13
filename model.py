@@ -52,8 +52,8 @@ def ConvSalmonModel():
         layers.Conv2D(32, (6,6), activation = 'relu'),
         layers.MaxPooling2D(),
         layers.Flatten(),
-        layers.Dense(128, activation = tf.nn.relu),
-        layers.Dense(nb_classes, activation = tf.nn.softmax)
+        layers.Dense(128, activation='relu'),
+        layers.Dense(nb_classes)
     ])
 
 
