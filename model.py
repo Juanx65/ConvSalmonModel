@@ -42,6 +42,7 @@ def ConvSalmonModel():
         layers.Dense(nb_classes)
     ])
 
+    #agregar capa de aumentacion de datos, utilisima
     data_augmentation = keras.Sequential(
         [
             layers.RandomFlip("horizontal",input_shape=(IMAGE_SIZE[0],IMAGE_SIZE[1],3)),
@@ -49,7 +50,7 @@ def ConvSalmonModel():
             layers.RandomZoom(0.1),
         ])
 
-    #Modelo pa probar porque ya no se que hacer
+    #Modelo con droput y image aumentation
     model_3 = Sequential([
       data_augmentation,
       layers.Rescaling(1./255),
