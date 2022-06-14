@@ -9,7 +9,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 
 
-def ConvSalmonModel():
+def ConvSalmonModel(optimizer,dropout):
     class_names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
     class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
     nb_classes  = len(class_names)
@@ -60,23 +60,23 @@ def ConvSalmonModel():
       layers.MaxPooling2D(),
       layers.Conv2D(32, 6, padding='same', activation='relu'),
       layers.MaxPooling2D(),
-      layers.Dropout(0.5),
+      layers.Dropout(dropout),
       layers.Flatten(),
       layers.Dense(1152, activation='relu'),
       layers.Dense(nb_classes)
      ])
 
     model = model_3
-    model.compile(optimizer= 'adam',     #'adam', # 'sgd'
+    model.compile(optimizer=  optimizer, # adam, sgd, adamax, ...
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
     #model.summary()
     return model
 
-def main():
-    model = ConvSalmonModel()
+def main(optimizer,dropout):
+    model = ConvSalmonModel(optimizer,dropout)
     model.summary()
 
 if __name__ == '__main__':
-    main()
+    main('adam',0.5)

@@ -19,7 +19,7 @@ def eval(opt):
     IMAGE_SIZE = (200,100)
 
     #inicialiazar el Modelo
-    model = ConvSalmonModel()
+    model = ConvSalmonModel(opt.optimizer, opt.dropout)
     model.load_weights(str(str(Path(__file__).parent) + opt.weights)).expect_partial()#'/checkpoints/cp-0100.ckpt'))
 
     img = tf.keras.utils.load_img(
@@ -40,6 +40,8 @@ def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str,help='initial weights path')
     parser.add_argument('--image',type=str,help='path image to evaluate')
+    parser.add_argument('--optimizer', default = 'adam',type=str,help='optimizer for the model ej: adam, sgd, adamax ...')
+    parser.add_argument('--dropout', default = 0.8,type=float,help='porcentage para droput de la red, si es que usa')
 
     opt = parser.parse_known_args()[0] if known else parser.parse_args()
     return opt

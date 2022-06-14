@@ -19,7 +19,7 @@ def train(opt):
     class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
     nb_classes  = len(class_names)
     IMAGE_SIZE = (200,100)
-    model = ConvSalmonModel()
+    model = ConvSalmonModel(opt.optimizer, opt.dropout)
 
     #Entrenar el modelo
     batch_size = opt.batch_size
@@ -105,6 +105,8 @@ def parse_opt(known=False):
     parser.add_argument('--epochs', default = 100 ,type=int,help='epoch to train')
     parser.add_argument('--data_dir', default = "rois/",type=str,help='dir to the dataset')
     parser.add_argument('--save', default = False,type=bool,help='save best checkpoint')
+    parser.add_argument('--optimizer', default = 'adam',type=str,help='optimizer for the model ej: adam, sgd, adamax ...')
+    parser.add_argument('--dropout', default = 0.5,type=float,help='porcentage para droput de la red, si es que usa')
 
     opt = parser.parse_known_args()[0] if known else parser.parse_args()
     return opt
