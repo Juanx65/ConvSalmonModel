@@ -55,3 +55,7 @@ names = ['salmon1_tests','salmon2_tests','salmon3_tests','salmon5_tests']
 ```
 * En la funcion `getRoI` se puede elegir retornar la ROI segun el paper, o simplemente `first_roi` que seria el pez entero recortado ajaja
 * Para el bench usaremos el RoI, pero por los problemas que trae porobablemente usar una red solo con `first_roi` tenga mejores resultados.
+
+# TEST
+
+por ahora recien implementando un test con una matriz de confusion, tengo el siguiente problema:

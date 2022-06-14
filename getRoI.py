@@ -152,7 +152,7 @@ def getRoi(img, img_mask, debug=False):
 
 		cv.imshow('debug', result)
 
-	return first_roi#final_roi
+	return final_roi#first_roi#final_roi
 
 def main():
 	salmon = 'frames_salmones/salmon8'
