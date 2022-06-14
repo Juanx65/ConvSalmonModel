@@ -48,3 +48,17 @@ python train.py --data_dir "rois/" --epochs 500 --batch_size 32 --save True --op
 ```
 
 donde `--save True` guardara `best.ckpt` segun la validacion del modelo, si no se especifica no guardara nada.
+
+
+## Adicionales
+
+recprdar actualizar las clases dependiendo del modelo para las funciones en `train.py`,  `eval.py`, `model.py` y `pre_data.py` donde el ultimo usa la funcion en `getRoI.py` para estructurar la carpeta utilizada para generar el datasert del modelo a entrenar utilizando la imagen original y el binario.
+```
+names = ['salmon1_tests','salmon2_tests','salmon3_tests','salmon5_tests']
+```
+
+
+## NOTAS ADICIONALES PARA LOS AUTORES:
+
+* En la funcion `getRoI` se puede elegir retornar la ROI segun el paper, o simplemente `first_roi` que seria el pez entero recortado ajaja
+* Para el bench usaremos el RoI, pero por los problemas que trae porobablemente usar una red solo con `first_roi` tenga mejores resultados.

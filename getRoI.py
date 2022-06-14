@@ -70,7 +70,7 @@ def getRoi(img, img_mask, debug=False):
 				break
 		except:
 			break
-							
+
 
 	m1 = 0; b1 = 0; m2 = 0; b2 = 0
 	fin_roi_w = x2 - x1;	fin_roi_w_half = int((x2-x1)/2)
@@ -152,7 +152,7 @@ def getRoi(img, img_mask, debug=False):
 
 		cv.imshow('debug', result)
 
-	return final_roi
+	return first_roi#final_roi
 
 def main():
 	salmon = 'frames_salmones/salmon7'

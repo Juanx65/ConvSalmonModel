@@ -10,7 +10,7 @@ from tensorflow.keras.models import Sequential
 
 
 def ConvSalmonModel(optimizer,dropout):
-    class_names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
+    class_names = ['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
     class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
     nb_classes  = len(class_names)
     #print(class_name_label)
@@ -45,7 +45,9 @@ def ConvSalmonModel(optimizer,dropout):
     #agregar capa de aumentacion de datos, utilisima
     data_augmentation = keras.Sequential(
         [
-            layers.RandomFlip("horizontal",input_shape=(IMAGE_SIZE[0],IMAGE_SIZE[1],3)),
+            #layers.RandomFlip("horizontal",input_shape=(IMAGE_SIZE[0],IMAGE_SIZE[1],3))
+            layers.RandomBrightness(0.1),
+            layers.GaussianNoise(10),
             layers.RandomRotation(0.1),
             layers.RandomZoom(0.1),
         ])

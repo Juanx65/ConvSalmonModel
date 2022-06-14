@@ -13,7 +13,7 @@ import argparse
 from model import ConvSalmonModel
 
 def eval(opt):
-    class_names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
+    class_names = ['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
     class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
     nb_classes  = len(class_names)
     IMAGE_SIZE = (200,100)

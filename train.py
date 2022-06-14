@@ -15,7 +15,7 @@ from model import ConvSalmonModel
 def train(opt):
 
     #inicialiazar el Modelo
-    class_names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
+    class_names = ['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']#['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
     class_names_label = {class_name:i for i, class_name in enumerate(class_names)}
     nb_classes  = len(class_names)
     IMAGE_SIZE = (200,100)
@@ -50,10 +50,10 @@ def train(opt):
       batch_size=batch_size)
 
     #para mantener el dataset cargado en la RAM y que sea más rapido
-    #AUTOTUNE = tf.data.AUTOTUNE
+    AUTOTUNE = tf.data.AUTOTUNE
 
-    #train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
-    #val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
+    train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
+    val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 
     # para guardar checkpoints
