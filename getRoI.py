@@ -36,9 +36,9 @@ def getRoi(img, img_mask, debug=False):
 	p_ul = [ min(np.int0(box)[:,0]), min(np.int0(box)[:,1])]		# upper-left
 	p_br = [ max(np.int0(box)[:,0]), max(np.int0(box)[:,1])]		# bottom-right
 
-	#cv.drawContours(result, [np.int0(box)], 0, (0,0,255),2)
-	#cv.imshow('asdasd',result)
-	#cv.waitKey(0)
+	# cv.drawContours(img, [np.int0(cv.boxPoints(rotRect))], 0, (0,0,255),2)
+	# cv.imshow('asdasd',img)
+	# cv.waitKey(0)
 
 	first_roi = result[p_ul[1]:p_br[1], p_ul[0]:p_br[0]]
 	first_roi_gray = cv.cvtColor(first_roi, cv.COLOR_BGR2GRAY)
@@ -64,9 +64,9 @@ def getRoi(img, img_mask, debug=False):
 			x2 = int((1-i)*fish_length)
 		fin_roi = first_roi_mask[0:int((p_br[1]-p_ul[1])/2),x1:x2]
 		try:
-			if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 1):
+			if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 3):
 				break
-			elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 1):
+			elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 3):
 				break
 		except:
 			break
@@ -91,7 +91,7 @@ def getRoi(img, img_mask, debug=False):
 
 	# --- Eye coordinates calculation ---
 	c = 0.12		# 0.07 perilla
-	th = 75
+	th = 50
 	if look_left:	# pez mirando a derecha, toma primeros pixeles para buscar ojo
 		a = 0
 		b = int(c*fish_length)
@@ -155,14 +155,15 @@ def getRoi(img, img_mask, debug=False):
 	return first_roi#final_roi
 
 def main():
-	salmon = 'frames_salmones/salmon7'
-	scene = '00046'
+	salmon = 'frames_salmones/salmon8'
+	scene = '00071'
 	img = cv.imread(salmon+'/original/scene'+scene+'.png')
 
 	img_mask = cv.imread(salmon+'/binario/scene'+scene+'.png')
 	img_mask = cv.cvtColor(img_mask, cv.COLOR_BGR2GRAY)		# para dejarlo de 1 canal
+	r, img_mask = cv.threshold(img_mask, 127, 255, cv.THRESH_BINARY)
 
-	result = getRoi(img, img_mask, debug=True)
+	result = getRoi(img, img_mask, debug=False)
 
 	cv.imshow('result', result)
 	cv.waitKey(0)
