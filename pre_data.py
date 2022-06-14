@@ -3,7 +3,7 @@ import cv2
 import os
 from pathlib import Path
 
-names = ['salmon1','salmon2','salmon3','salmon5','salmon7','salmon9','salmon10','salmon11']
+names = ['salmon5_tests']
 for name in names:
     loadPath = str( str(Path(__file__).parent) + '/frames_salmones/' + name)
     savepath = str( str(Path(__file__).parent) + '/rois/'+name)
