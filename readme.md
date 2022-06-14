@@ -1,64 +1,57 @@
 
-## instalacion:
+# INSTALLATION:
 
-# usando conda en windows 11:
-fracase miserablemente entrenando la red en windows 11 porque tensorflow 2.9.1 tira un error de que no hay permisos para escribir los checkpoints, puedes entrenar pero no guardara los pesos... de todas formas, asi lo isntale:
-  Usando conda env tenemos que para que tensorflow pesque la gpu debemos inicial el env asi:
+## Using `virtualenv` in linux (tensorflow 2.9.1)
 
-  ```
-  conda create -n name tensorflow-gpu
-  ```
 
-  de lo contrario no se podra usar la gpu.
-  dsp instalar los requirements.
-
-## usando virtualenv en manjaro linux
-
-creamos un pipenv de la siguiente manera:
+First, create an env using `virtualenv` once inside the Folder of the repository as follows:
 
 ```
  virtualenv ConvSalmonModel
 ```
-y entramos a él de la siguiente forma:
+
+where, `ConvSallmonModedl` is the name of the env.
+Enter the env as follows:
+
 ```
  source ConvSalmonModel/bin/activate
 ```
-
-luego instalamos los requirementes:
+Then install the requirements:
 
 ```
 pip install -r requirements.txt
 ```
 
-isi, aun asi tensorflow no se que tiene que tira más warnings que la perra
+## Using Conda in any OS.
+For the moment, this method fails to save the checkpoints (at least in windows), so we recomend to try virtualenv.
 
-## Para evaluar el modelo entrenado usar por ejemplo:
+  ```
+  conda create -n ConvSallmonModedl tensorflow-gpu
+  conda activate ConvSallmonModedl
+  ```
 
+
+#  EVALUATE
+To evaluate the trained model, use the following example as a guide:
 ```
-python eval.py --image /rois/salmon5/scene00161.png --weights /checkpoints/best.ckpt
+python eval.py --image /rois_tests/salmon5_tests/scene00161.png --weights /checkpoints/best.ckpt
 ```
 
-donde `--image` es el path a la imagen a evaluar y `--weights` es el path a los pesos entrenados.
+Where  `--image` is the path to the image to evaluate and  `--weights` is the path to the checkpoints (trained weights of the model).
 
-
-## Para entrenar modelo, guiarse por el siguiente ejemplo:
-
+# TRAIN
+To train the model, use the following example as a guide:
 ```
 python train.py --data_dir "rois/" --epochs 500 --batch_size 32 --save True --optimizer 'adam' --dropout 0.8
 ```
 
-donde `--save True` guardara `best.ckpt` segun la validacion del modelo, si no se especifica no guardara nada.
+Where `--save True` saves `best.ckpt` in the `checkpoints` folder, following the validation accuracy of the model. if it is not specified, it wont be saved.
 
 
-## Adicionales
-
-recprdar actualizar las clases dependiendo del modelo para las funciones en `train.py`,  `eval.py`, `model.py` y `pre_data.py` donde el ultimo usa la funcion en `getRoI.py` para estructurar la carpeta utilizada para generar el datasert del modelo a entrenar utilizando la imagen original y el binario.
+## MORE
+* recordar actualizar las clases dependiendo del modelo para las funciones en `train.py`,       `eval.py`, `model.py` y `pre_data.py` donde el ultimo usa la funcion en `getRoI.py` para estructurar la carpeta utilizada para generar el datasert del modelo a entrenar utilizando la imagen original y el binario.
 ```
 names = ['salmon1_tests','salmon2_tests','salmon3_tests','salmon5_tests']
 ```
-
-
-## NOTAS ADICIONALES PARA LOS AUTORES:
-
 * En la funcion `getRoI` se puede elegir retornar la ROI segun el paper, o simplemente `first_roi` que seria el pez entero recortado ajaja
 * Para el bench usaremos el RoI, pero por los problemas que trae porobablemente usar una red solo con `first_roi` tenga mejores resultados.
