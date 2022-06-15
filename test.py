@@ -40,7 +40,7 @@ def main(opt):
         validation_split=None,
         subset=None,
         image_size=(IMAGE_SIZE[0], IMAGE_SIZE[1]),
-        batch_size=107)
+        batch_size=32)
 
     model = ConvSalmonModel(opt.optimizer, opt.dropout)
     model.load_weights(str(str(Path(__file__).parent) + opt.weights)).expect_partial()
@@ -63,7 +63,7 @@ def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--batch_size', default = 32, type=int,help='batch size to train')
     parser.add_argument('--weights', type=str,default = '/checkpoints/best.ckpt',help='initial weights path')
-    parser.add_argument('--data_dir',type=str,default = 'rois/', help='path to dataset to test')
+    parser.add_argument('--data_dir',type=str,default = 'rois_tests/', help='path to dataset to test')
     parser.add_argument('--optimizer', default = 'adam',type=str,help='optimizer for the model ej: adam, sgd, adamax ...')
     parser.add_argument('--dropout', default = 0.8,type=float,help='porcentage para droput de la red, si es que usa')
 

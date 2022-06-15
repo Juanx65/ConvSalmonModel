@@ -45,7 +45,6 @@ def ConvSalmonModel(optimizer,dropout):
     #agregar capa de aumentacion de datos, utilisima
     data_augmentation = keras.Sequential(
         [
-            #layers.RandomFlip("horizontal",input_shape=(IMAGE_SIZE[0],IMAGE_SIZE[1],3))
             layers.RandomBrightness(0.1),
             layers.GaussianNoise(10),
             layers.RandomRotation(0.1),
