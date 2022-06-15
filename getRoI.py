@@ -64,9 +64,9 @@ def getRoi(img, img_mask, debug=False):
 			x2 = int((1-i)*fish_length)
 		fin_roi = first_roi_mask[0:int((p_br[1]-p_ul[1])/2),x1:x2]
 		try:
-			if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 3):
+			if look_left and (np.where(fin_roi[:,-1] == 255)[0][0] < 1):
 				break
-			elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 3):
+			elif not look_left and (np.where(fin_roi[:,0] == 255)[0][0] < 1):
 				break
 		except:
 			break
@@ -90,8 +90,8 @@ def getRoi(img, img_mask, debug=False):
 	#print('UP:',UP)
 
 	# --- Eye coordinates calculation ---
-	c = 0.12		# 0.07 perilla
-	th = 50
+	c = 0.20#0.12		# 0.07 perilla
+	th = 85#50
 	if look_left:	# pez mirando a derecha, toma primeros pixeles para buscar ojo
 		a = 0
 		b = int(c*fish_length)

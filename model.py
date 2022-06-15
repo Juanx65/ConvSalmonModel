@@ -78,7 +78,7 @@ def ConvSalmonModel(optimizer,dropout):
 
 def main(optimizer,dropout):
     model = ConvSalmonModel(optimizer,dropout)
-    model.summary()
+    #model.summary()
 
 if __name__ == '__main__':
     main('adam',0.5)
