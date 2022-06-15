@@ -29,7 +29,9 @@ def eval(opt):
     img_array = tf.expand_dims(img_array, 0) # Create a batch
 
     predictions = model.predict(img_array)
+    #print(predictions)
     score = tf.nn.softmax(predictions[0])
+    #print(score)
 
     print(
         "This image most likely belongs to {} with a {:.2f} percent confidence."
