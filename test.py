@@ -11,6 +11,8 @@ from tensorflow.keras.models import Sequential
 import argparse
 import seaborn as sns#0.1
 
+from sklearn import metrics
+
 
 from model import ConvSalmonModel
 
@@ -57,6 +59,7 @@ def main(opt):
         predictions,
         num_classes=len(label_names))
 
+    print(metrics.classification_report(labels, predictions, digits=3))
     show_confusion_matrix(confusion_mtx, label_names)
 
 def parse_opt(known=False):
