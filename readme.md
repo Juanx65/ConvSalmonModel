@@ -2,11 +2,11 @@
 ## Benchmarking IPD441
 ### Juan Aguilera - Felipe Villenas
 
-This repository tries to blah blah blah...
+This repository contains the data and code for the CNN approach for the underwater fish recognition based on dot's skin recognition.
 
 # INSTALLATION:
 
-## Using `virtualenv` in linux (tensorflow 2.9.1)
+## Using `virtualenv` in linux
 
 First, create an env using `virtualenv` once inside the Folder of the repository as follows:
 
@@ -25,7 +25,7 @@ Then install the requirements:
 ```
 pip install -r requirements.txt
 ```
-
+note: tensorflow==2.9.1
 #### As an alternative, you can try using conda:
 For the moment, this method fails to save the checkpoints (at least in windows), so we recomend to try virtualenv.
 
@@ -66,10 +66,10 @@ Where `--data_dir` is the path to the dataset to test and  `--weights` is the pa
 ###### `test.py` will display the confusion matrix of a given dataset for the checkpoints of the model.
 
 * Confusion Matrix on the training dataset:
-  ![confusion matrix of training dataset.](/images_readme/test_dataset_train.png)
+  ![confusion matrix of training dataset.](/images_readme/conf_roi_bench.png)
 
 * Confusion Matrix on a testing dataset:
-  ![confusion matrix of test dataset.](/images_readme/test_data_test.png)
+  ![confusion matrix of test dataset.](/images_readme/conf_roi_tests_bench.png)
 
 # TRAIN
 To train the model, use the following example as a guide:
@@ -79,8 +79,4 @@ python train.py --data_dir "rois/" --epochs 500 --batch_size 32 --save True --op
 Where `--save True` saves `best.ckpt` in the `checkpoints` folder, following the validation accuracy of the model. if it is not specified, it wont be saved.
 
 * accuracy on train and validation data over the training process:
-  ![confusion matrix of test dataset.](/images_readme/acc_model3_dp06_adam.png)
-
-  (x: epochs)
-
-## MORE
+  ![confusion matrix of test dataset.](/images_readme/accuracy_bench.png)

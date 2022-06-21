@@ -17,8 +17,8 @@ def ConvSalmonModel(optimizer,dropout):
     IMAGE_SIZE = (200,100)
 
     #Modelo que hice inicialmente:
-    model_1 = tf.keras.Sequential([
-        layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
+    model_1 = Sequential([
+        layers.Rescaling(1./255),
         layers.Conv2D(16,(3, 3), activation = 'relu'),
         layers.MaxPooling2D(),
         layers.Conv2D(32, (3,3), activation = 'relu'),
@@ -29,8 +29,8 @@ def ConvSalmonModel(optimizer,dropout):
     ])
 
     #Modelo que promone el papers de los salmones pa detectar manchas/puntos:
-    model_2 = tf.keras.Sequential([
-        layers.experimental.preprocessing.Rescaling(1./255, input_shape=(IMAGE_SIZE[0], IMAGE_SIZE[1], 3)),
+    model_2 = Sequential([
+        layers.Rescaling(1./255),
         layers.Conv2D(8,(3, 3), activation = 'relu'),
         layers.MaxPooling2D(),
         layers.Conv2D(16,(3, 3), activation = 'relu'),
@@ -53,19 +53,19 @@ def ConvSalmonModel(optimizer,dropout):
 
     #Modelo con droput y image aumentation
     model_3 = Sequential([
-      data_augmentation,
-      layers.Rescaling(1./255),
-      layers.Conv2D(8, 3, padding='same', activation='relu'),
-      layers.MaxPooling2D(),
-      layers.Conv2D(16, 3, padding='same', activation='relu'),
-      layers.MaxPooling2D(),
-      layers.Conv2D(32, 6, padding='same', activation='relu'),
-      layers.MaxPooling2D(),
-      layers.Dropout(dropout),
-      layers.Flatten(),
-      layers.Dense(1152, activation='relu'),
-      layers.Dense(nb_classes)
-     ])
+        data_augmentation,
+        layers.Rescaling(1./255),
+        layers.Conv2D(8, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(16, 3, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Conv2D(32, 6, padding='same', activation='relu'),
+        layers.MaxPooling2D(),
+        layers.Dropout(dropout),
+        layers.Flatten(),
+        layers.Dense(1152, activation='relu'),
+        layers.Dense(nb_classes)
+        ])
 
     model = model_3
     model.compile(optimizer=  optimizer, # adam, sgd, adamax, ...

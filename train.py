@@ -78,6 +78,8 @@ def train(opt):
           epochs=epochs
         )
 
+
+    model.summary()
     # graficos y weas lindas
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
