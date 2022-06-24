@@ -71,6 +71,7 @@ def getRoi(img, img_mask, debug=False):
 		except:
 			break
 
+	
 
 	m1 = 0; b1 = 0; m2 = 0; b2 = 0
 	fin_roi_w = x2 - x1;	fin_roi_w_half = int((x2-x1)/2)
