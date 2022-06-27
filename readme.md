@@ -59,7 +59,7 @@ Where  `--image` is the path to the image to evaluate and  `--weights` is the pa
 # TEST
 To test the model, use the following example as a guide:
 ```
-python test.py --data_dir 'rois_test/' --weights '/checkpoints/best.ckpt'
+python test.py --data_dir 'rois_tests/' --weights '/checkpoints/best.ckpt'
 ```
 Where `--data_dir` is the path to the dataset to test and  `--weights` is the path to the checkpoints (trained weights of the model).
 

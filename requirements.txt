@@ -1,5 +1,5 @@
 tensorflow
 matplotlib
 opencv-python
-
+sklearn
 seaborn
