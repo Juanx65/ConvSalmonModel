@@ -2,7 +2,7 @@
 ## Benchmarking IPD441
 ### Juan Aguilera - Felipe Villenas
 
-This repository contains the data and code for the CNN and HOG approach for the underwater fish recognition based on dot's skin recognition.
+This repository contains the data and code for the CNN and HOG approach for the underwater fish recognition based on skin dots recognition.
 
 # INSTALLATION:
 
