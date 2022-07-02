@@ -2,4 +2,5 @@ tensorflow
 matplotlib
 opencv-python
 sklearn
+scikit-image
 seaborn
